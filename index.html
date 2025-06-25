@@ -59,6 +59,40 @@
             </li>
         </ul>
     </nav>
+
+    <div class="carousel" id="carousel">
+        <div class="carousel-buttons">
+            <button id="prev">&#8592;</button>
+            <button id="next">&#8594;</button>
+        </div>
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Filtros ocultos por defecto -->
+    <aside class="filters" style="display: none;">
+        <h3>Filters</h3>
+        <div class="filter-section">
+            <h4>Category</h4>
+            <select id="category-filter">
+                <option value="">All Categories</option>
+            </select>
+        </div>
+        <div class="filter-section">
+            <h4>Price</h4>
+            <input type="range" id="price-filter" min="0" max="1000" value="1000">
+            <span id="price-value">$1000</span>
+        </div>
+        <div class="filter-section">
+            <h4>Rating</h4>
+            <select id="rating-filter">
+                <option value="">All Ratings</option>
+                <option value="4">4 Stars & Up</option>
+                <option value="3">3 Stars & Up</option>
+                <option value="2">2 Stars & Up</option>
+                <option value="1">1 Star & Up</option>
+            </select>
+        </div>
+    </aside>
 </body>
 
 </html>
