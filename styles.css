@@ -668,3 +668,212 @@ footer {
   gap: 1.2rem;
   font-family: inherit;
 }
+
+#cart-panel {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 20px;
+  z-index: 999;
+}
+
+@media (max-width: 1200px) {
+  .carousel {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  .categorias-destacadas {
+    gap: 18px;
+    padding: 0 10px;
+  }
+  .productos-categoria {
+    margin-left: 10px;
+  }
+  #cart-panel {
+    right: 10px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 900px) {
+  .carousel-slide {
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    min-height: 260px;
+    text-align: center;
+  }
+  .carousel-content {
+    max-width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
+  }
+  .carousel-slide img {
+    max-width: 160px;
+    margin: 0 auto;
+  }
+  .categorias-destacadas {
+    flex-direction: column;
+    gap: 18px;
+    margin: 10px;
+    padding: 0 5px;
+  }
+  .categoria {
+    padding: 18px 8px;
+  }
+  .productos-categoria {
+    gap: 10px;
+    margin-left: 0;
+  }
+  #cart-panel {
+    width: 90vw;
+    left: 5vw;
+    right: 5vw;
+    top: 70px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    }
+    .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+    .logo img {
+    height: 60px;
+    }
+    .search-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0;
+    }
+    .search-bar input {
+    width: 200px;
+    }
+    .user-actions {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    }
+    nav {
+    padding: 8px 8px;
+    }
+    nav ul {
+    flex-direction: row !important; /* Mantiene el nav horizontal en responsive */
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    }
+    nav ul li {
+    margin: 0 6px;
+    }
+    .carousel {
+    margin-top: 8px;
+    display: none; /* Oculta la publicidad/carrusel en pantallas pequeñas */
+    }
+    .carousel-slide {
+    min-height: 180px;
+    padding: 1rem 0.5rem;
+    }
+    .carousel-slide img {
+    max-width: 110px;
+    }
+    .productos-categoria {
+    gap: 6px;
+    flex-direction: column; /* Muestra las categorías de ropa verticalmente */
+    align-items: stretch;
+    }
+    .producto-miniatura {
+    min-width: 120px;
+    max-width: 100%;
+    padding: 6px;
+    margin: 0 auto;
+    }
+    .producto-miniatura img {
+    width: 60px;
+    height: 60px;
+    }
+    #cart-panel {
+    width: 98vw;
+    left: 1vw;
+    right: 1vw;
+    top: 60px;
+    padding: 6px;
+    }
+    footer {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+    gap: 12px;
+    }
+    .footer-links ul {
+    flex-direction: column;
+    gap: 8px;
+    }
+
+
+    @media (max-width: 700px) {
+      .user-actions {
+        width: auto;
+        margin-top: 0;
+        justify-content: flex-end;
+        position: absolute;
+        right: 20px;
+        top: 30px;
+        background: none;
+        z-index: 100;
+      }
+      .user-actions .login-button {
+        padding: 5px 10px;
+        font-size: 13px;
+      }
+      .user-actions .cart-button img {
+        height: 24px;
+      }
+      .user-actions .cart-button span {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+        top: -7px;
+        right: -7px;
+      }
+      header {
+        position: relative;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .todos-los-productos .filters {
+        max-width: 120px;
+        min-width: 120px;
+        width: 10vw;
+        margin: 0 auto 16px auto;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .filter-section {
+        max-width: 300px;
+        min-width: 300px;
+        width: 80px;
+        padding: 6px;
+      }
+    }
+  }
