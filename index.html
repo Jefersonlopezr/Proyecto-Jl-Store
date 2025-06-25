@@ -93,6 +93,35 @@
             </select>
         </div>
     </aside>
+
+    <section class="todos-los-productos">
+        <!-- Aquí aparecerán los productos filtrados -->
+        <div class="products"></div>
+
+        <!-- Estos son los carruseles destacados -->
+        <section class="categorias-destacadas">
+            <div class="categoria" id="categoria-electronics">
+                <h2>Electrónicos</h2>
+                <div class="productos-categoria-wrapper">
+                    <button class="categoria-flecha izq"
+                        onclick="moverCarrusel('categoria-electronics', -1)">&lt;</button>
+                    <div class="productos-categoria"></div>
+                    <button class="categoria-flecha der"
+                        onclick="moverCarrusel('categoria-electronics', 1)">&gt;</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="categorias-destacadas">
+            <div class="categoria" id="categoria-clothing">
+                <h2>Ropa</h2>
+                <div class="productos-categoria-wrapper">
+                    <button class="categoria-flecha izq" onclick="moverCarrusel('categoria-clothing', -1)">&lt;</button>
+                    <div class="productos-categoria"></div>
+                    <button class="categoria-flecha der" onclick="moverCarrusel('categoria-clothing', 1)">&gt;</button>
+                </div>
+            </div>
+        </section>
 </body>
 
 </html>
