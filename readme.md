@@ -5,7 +5,7 @@ JL Store es una aplicación para la gestión de una tienda en línea, desarrolla
 
 ## 🌐 Demo en línea
 Puedes ver el portafolio publicado en GitHub Pages aquí:
-👉 
+👉 https://jefersonlopezr.github.io/Proyecto-Jl-Store/
 
 ## Maquetación en Figma
 ![Diseño en figma](image.png)
