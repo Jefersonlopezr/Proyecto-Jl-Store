@@ -32,7 +32,7 @@
     <nav class="nav-variedades">
         <ul>
             <li class="palabras-nav">
-                <a href="#home">
+                <a href="#home" id="go-home">
                     <img src="./ICONS/house.png" alt="Home"
                         style="display:block;margin:0 auto 4px;width:32px;height:32px;">
                     Home
@@ -71,30 +71,29 @@
     </div>
 
     <!-- Filtros ocultos por defecto -->
-    <aside class="filters" style="display: none;">
-        <h3>Filters</h3>
-        <div class="filter-section">
-            <h4>Category</h4>
-            <select id="category-filter">
-                <option value="">All Categories</option>
-            </select>
-        </div>
-        <div class="filter-section">
-            <h4>Price</h4>
-            <input type="range" id="price-filter" min="0" max="1000" value="1000">
-            <span id="price-value">$1000</span>
-        </div>
-        <div class="filter-section">
-            <h4>Rating</h4>
-            <select id="rating-filter">
-                <option value="">All Ratings</option>
-                <option value="4">4 Stars & Up</option>
-                <option value="3">3 Stars & Up</option>
-                <option value="2">2 Stars & Up</option>
-                <option value="1">1 Star & Up</option>
-            </select>
-        </div>
-    </aside>
+<div class="filters-horizontal" id="filters" style="display: none;">
+    <div class="filter-item">
+        <label for="category-filter">Category</label>
+        <select id="category-filter">
+            <option value="">All Categories</option>
+        </select>
+    </div>
+    <div class="filter-item">
+        <label for="price-filter">Price</label>
+        <input type="range" id="price-filter" min="0" max="1000" value="1000">
+        <span id="price-value">$1000</span>
+    </div>
+    <div class="filter-item">
+        <label for="rating-filter">Rating</label>
+        <select id="rating-filter">
+            <option value="">All Ratings</option>
+            <option value="4">4 Stars & Up</option>
+            <option value="3">3 Stars & Up</option>
+            <option value="2">2 Stars & Up</option>
+            <option value="1">1 Star & Up</option>
+        </select>
+    </div>
+</div>
 
     <section class="todos-los-productos">
         <!-- Aquí aparecerán los productos filtrados -->
@@ -139,7 +138,7 @@
         </section>
     </section>
 
-        <footer>
+    <footer>
         <div class="footer-links">
             <ul>
                 <div>
@@ -160,18 +159,25 @@
                     <li>Contact Us</li>
                     <p> Social Media:</p>
                     <div class="social-media">
-                        <a href="https://www.facebook.com/jeferson.lopezrincon"><img src="./ICONS/Facebook_Logo_(2019).png" alt="Facebook"></a>
-                        <a href="https://www.linkedin.com/in/jeferson-lopez-rincon-8023851b8/"><img src="./ICONS/linkedin.png" alt="Linkedin"></a>
-                        <a href="https://www.instagram.com/jefersonlopezr/"><img src="./ICONS/Instagram_icon.png" alt="Instagram"></a>
+                        <a href="https://www.facebook.com/jeferson.lopezrincon"><img
+                                src="./ICONS/Facebook_Logo_(2019).png" alt="Facebook"></a>
+                        <a href="https://www.linkedin.com/in/jeferson-lopez-rincon-8023851b8/"><img
+                                src="./ICONS/linkedin.png" alt="Linkedin"></a>
+                        <a href="https://www.instagram.com/jefersonlopezr/"><img src="./ICONS/Instagram_icon.png"
+                                alt="Instagram"></a>
                     </div>
                 </div>
 
-                <div><li><a href="#">Experiencia</a></li>
-                    <p class="parte-1">Contamos con la experiencia y reputación suficiente para brindarte la mejor experiencia en tus compras, siempre ofreciendo seguridad y paz en tu proceso online</p>
+                <div>
+                    <li><a href="#">Experiencia</a></li>
+                    <p class="parte-1">Contamos con la experiencia y reputación suficiente para brindarte la mejor
+                        experiencia en tus compras, siempre ofreciendo seguridad y paz en tu proceso online</p>
                 </div>
 
-                <div><li><a href="#">Address</a></li>
-                    <p class="parte-1">Jl Store internet private limite, building Floridablanca, Colombia and Santander deparment. Postal code: 681001</p>
+                <div>
+                    <li><a href="#">Address</a></li>
+                    <p class="parte-1">Jl Store internet private limite, building Floridablanca, Colombia and Santander
+                        deparment. Postal code: 681001</p>
                 </div>
             </ul>
         </div>
@@ -179,19 +185,28 @@
 
     <!-- PANEL DEL CARRITO -->
     <div id="cart-panel" class="cart" style="display: none;">
-        <h2>Carro de compra</h2>
+        <div class="cart-header">
+            <h2>Carrito de Compras</h2>
+            <button id="close-cart" class="close-cart-btn">&times;</button>
+        </div>
         <div id="cart-items">
-            <!-- Los productos se insertan   dinámicamente aquí -->
+            <!-- Los productos se insertan dinámicamente aquí -->
         </div>
         <div class="cart-summary">
-            <h3>Suma de productos</h3>
-            <p>Total Productos: <span id="total-items">0</span></p>
-            <p>Precio Total: $<span id="total-price">0.00</span></p>
-            <button id="checkout-button">PAGAR</button>
+            <div class="summary-row">
+                <span>Total Productos:</span>
+                <span id="total-items">0</span>
+            </div>
+            <div class="summary-row total-row">
+                <span>Total a Pagar:</span>
+                <span id="total-price">$0.00</span>
+            </div>
+            <button id="checkout-button" class="checkout-btn">PROCEDER AL PAGO</button>
+            <button id="clear-cart" class="clear-cart-btn">VACIAR CARRITO</button>
         </div>
     </div>
 
-        <!-- Formulario de inscripción oculto -->
+    <!-- Formulario de inscripción oculto -->
     <div id="signup-modal"
         style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
         <form id="signup-form"
@@ -208,7 +223,82 @@
         </form>
     </div>
 
+    <div id="payment-modal" style="display:none;" class="modal-overlay">
+        <div class="modal-content confirmation-layout">
+            <span id="close-payment-modal" class="close-btn">&times;</span>
+            <h2>Confirmación de Pedido</h2>
+
+            <div class="confirmation-grid">
+                <!-- IZQUIERDA: Detalles de productos -->
+                <div class="confirmation-left">
+                    <section class="payment-section">
+                        <h3>🧾 Resumen de productos</h3>
+                        <div id="payment-details" class="payment-details"></div>
+                    </section>
+                </div>
+
+                <!-- DERECHA: Dirección y método de pago -->
+                <div class="confirmation-right">
+                    <section class="payment-section">
+                        <h3>📍 Dirección de envío</h3>
+                        <div class="shipping-form">
+                            <div class="form-row">
+                                <input type="text" id="full-name" placeholder="Nombre completo" required>
+                                <input type="tel" id="phone" placeholder="Teléfono" required>
+                            </div>
+                            <input type="text" id="address"
+                                placeholder="Dirección exacta (ej: Calle 12 #34-56 Apto 101)" required>
+                            <div class="form-row">
+                                <select id="country" required>
+                                    <option value="">País</option>
+                                    <option value="Colombia" selected>Colombia</option>
+                                    <!-- Puedes agregar más países si lo necesitas -->
+                                </select>
+                                <select id="region" required>
+                                    <option value="">Departamento</option>
+                                    <option>Santander</option>
+                                    <option>Antioquia</option>
+                                    <option>Valle del Cauca</option>
+                                    <option>Cundinamarca</option>
+                                    <option>Atlántico</option>
+                                </select>
+                            </div>
+                            <select id="city" required>
+                                <option value="">Ciudad</option>
+                                <option>Bucaramanga</option>
+                                <option>Floridablanca</option>
+                                <option>Medellín</option>
+                                <option>Cali</option>
+                                <option>Bogotá</option>
+                                <option>Barranquilla</option>
+                            </select>
+                        </div>
+                    </section>
+
+
+                    <section class="payment-section">
+                        <h3>💳 Método de pago</h3>
+                        <div class="payment-methods">
+                            <label><input type="radio" name="payment-method" value="card" checked> Tarjeta de
+                                crédito</label>
+                            <label><input type="radio" name="payment-method" value="paypal"> PayPal</label>
+                            <label><input type="radio" name="payment-method" value="cash"> Pago contra entrega</label>
+                        </div>
+                    </section>
+
+                    <div class="payment-actions">
+                        <button id="confirm-payment" class="checkout-btn">Pagar ahora</button>
+                        <button id="cancel-payment" class="clear-cart-btn">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script src="./main.js"></script>
+
 </body>
 
 </html>

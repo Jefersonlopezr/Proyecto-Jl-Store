@@ -87,3 +87,47 @@ Este proyeto se realizó con inspiración propia, tanto en su diseño y paleta d
 ## Recursos adicionales
 
 - [Documentación oficial de API Fakestore](https://fakestoreapi.com/products)
+
+
+📐 Decisiones de diseño y experiencia de usuario
+En el desarrollo de JL Store se priorizó una interfaz clara, intuitiva y moderna, basada en principios de usabilidad y accesibilidad. Algunas decisiones clave fueron:
+
+- Diseño responsivo: se adapta a diferentes tamaños de pantalla, desde móviles hasta escritorios, garantizando una experiencia coherente.
+
+- Navegación icónica: se implementaron íconos visuales y texto en la barra de navegación para facilitar el reconocimiento y acceso rápido a cada sección.
+
+- Modal de compra mejorado: el proceso de pago incluye selección de método, resumen detallado y campos de envío organizados, brindando confianza y realismo al usuario.
+
+- Notificaciones visuales: se muestran alertas animadas al agregar productos al carrito, eliminarlos o completar una compra, reforzando el feedback inmediato.
+
+
+🗂️ Estructura de datos
+La aplicación utiliza localStorage para mantener persistencia entre sesiones del navegador. Las estructuras de datos clave son:
+
+- Carrito de compras (cart): se representa como un array de objetos con las propiedades:
+
+js
+Copiar
+Editar
+{
+  id, title, price, image, category, quantity
+}
+
+- Esto permite un manejo flexible de cada producto y sus cantidades en el carrito.
+
+- Historial de compras (orderHistory): almacena un array de objetos con los pedidos realizados, incluyendo fecha, método de pago, total y detalles de productos.
+
+- Usuarios registrados (usuarios): los datos del formulario de registro se guardan como objetos en un array, conteniendo nombre, email, password, y fechaRegistro.
+
+- Productos: los datos se obtienen desde FakeStore API y se procesan dinámicamente para renderizar la tienda, carruseles y filtros.
+
+🧭 Justificación de filtros y ordenamientos
+Desde el enfoque de usabilidad, se implementaron filtros clave para mejorar la experiencia de compra:
+
+- Filtro por categoría: permite acceder rápidamente a productos de interés como ropa, electrónicos o accesorios, reduciendo la sobrecarga cognitiva.
+
+- Rango de precio: el control deslizante ofrece una forma visual y sencilla de limitar resultados sin necesidad de escribir valores.
+
+- Filtro por calificación: brinda a los usuarios la opción de priorizar productos mejor valorados, facilitando la toma de decisiones.
+
+- Búsqueda en tiempo real: permite encontrar productos específicos mediante palabras clave, agilizando el proceso de descubrimiento.
