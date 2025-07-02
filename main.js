@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isActionButton =
             e.target.closest('.quantity-btn') ||
             e.target.closest('.remove-btn') ||
-            e.target.closest('#close-cart'); // 👈 esto detecta la X correctamente
+            e.target.closest('#close-cart'); // 
 
         if (
             cartPanel.style.display === 'block' &&
@@ -106,6 +106,41 @@ async function addToCart(productId) {
     }
 }
 
+async function addToCartFromFavorites(productId) {
+    try {
+        // Obtener información del producto desde la API
+        const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+        const product = await response.json();
+        
+        let cart = loadCartFromLocalStorage();
+        // Buscar si el producto ya existe en el carrito
+        const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+        if (existingItemIndex !== -1) {
+            // Si existe, aumentar la cantidad
+            cart[existingItemIndex].quantity += 1;
+        } else {
+            // Si no existe, agregarlo con cantidad 1
+            cart.push({
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                image: product.image,
+                category: product.category,
+                quantity: 1
+            });
+        }
+
+        saveCartToLocalStorage(cart);
+        updateCartCount();
+        showNotification(`${product.title} agregado al carrito`);
+        
+    } catch (error) {
+        console.error('Error adding product to cart from favorites:', error);
+        showNotification('Error al agregar producto al carrito', 'error');
+    }
+}
+
 function updateQuantity(productId, change) {
     let cart = loadCartFromLocalStorage();
     const itemIndex = cart.findIndex(item => item.id === productId);
@@ -147,6 +182,8 @@ function updateCartCount() {
         cartCount.textContent = totalItems;
     }
 }
+
+
 
 async function renderCart() {
     document.getElementById('cart-panel').style.display = 'block';
@@ -197,6 +234,61 @@ async function renderCart() {
         document.getElementById('total-price').textContent = totalPrice.toFixed(2);
     }
 }
+
+function viewfavorites() {
+    const cartPanel = document.getElementById('cart-panel');
+    cartPanel.style.display = 'block';
+    const cartItemsContainer = document.getElementById('cart-items');
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    if (cartItemsContainer) {
+        cartItemsContainer.innerHTML = '';
+
+        if (favorites.length === 0) {
+            cartItemsContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No tienes favoritos</p>';
+            return;
+        }
+
+        favorites.forEach(productId => {
+            fetch(`https://fakestoreapi.com/products/${productId}`)
+                .then(res => res.json())
+                .then(product => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <img src="${product.image}" alt="${product.title}">
+                        <div class="cart-item-info">
+                            <h3>${product.title}</h3>
+                            <p class="price">$${product.price}</p>
+                            <p class="category">${product.category}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-controls">
+                                <button onclick="addToCartFromFavorites(${product.id})" class="quantity-btn">Agregar al carrito</button>
+                                <button onclick="toggleFavorite(${product.id})" class="favorite-btn">Eliminar de favoritos</button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                })
+                .catch(error => {
+                    console.error('Error fetching favorite product:', error);
+                });
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const favoriteButton = document.getElementById('view-favorites');
+    if (favoriteButton) {
+        favoriteButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            viewfavorites();
+        });
+    }
+});
+
+
 
 // Función para mostrar notificaciones
 function showNotification(message, type = 'success') {
@@ -318,7 +410,7 @@ async function searchProducts(query) {
 }
 
 function showFiltersView() {
-    document.getElementById('filters').style.display = 'flex'; // o block si prefieres
+    document.getElementById('filters').style.display = 'flex'; 
     document.querySelector('.products').style.display = 'grid';
     document.querySelectorAll('.categorias-destacadas').forEach(el => el.style.display = 'none');
 }
@@ -347,6 +439,106 @@ function renderProducts(products) {
         productsContainer.appendChild(productCard);
     });
 }
+
+function favoriteProduct(productId) {
+    const cart = loadCartFromLocalStorage();
+    const product = cart.find(item => item.id === productId);
+    
+    if (product) { 
+        showNotification(`${product.title} ya está en tu carrito`, 'info');
+        return;
+    }
+
+    fetch(`https://fakestoreapi.com/products/${productId}`)
+        .then(res => res.json())
+        .then(product => {
+            cart.push({
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                image: product.image,
+                category: product.category,
+                quantity: 1
+            });
+            saveCartToLocalStorage(cart);
+            updateCartCount();
+            showNotification(`${product.title} agregado a favoritos`);
+        })
+        .catch(error => {
+            console.error('Error al agregar producto a favoritos:', error);
+            showNotification('Error al agregar producto a favoritos', 'error');
+        });
+}
+
+function toggleFavorite(productId) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const index = favorites.indexOf(productId);
+    if (index === -1) {
+        favorites.push(productId);
+        showNotification('Producto agregado a favoritos');
+    } else {
+        favorites.splice(index, 1);
+        showNotification('Producto eliminado de favoritos', 'info');
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    updateFavoriteButtons();
+}
+
+function isFavorite(productId) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    return favorites.includes(productId);
+}
+
+function updateFavoriteButtons() {
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+        const productId = parseInt(btn.dataset.productId, 10);
+        if (isFavorite(productId)) {
+            btn.classList.add('favorited');
+            btn.innerHTML = '';
+        } else {
+            btn.classList.remove('favorited');
+            btn.innerHTML = '';
+        }
+    });
+}
+
+//  FAVORITOS 
+// Cargar favoritos al inicio
+document.addEventListener('DOMContentLoaded', () => {
+    updateFavoriteButtons();
+});
+
+
+const originalRenderProducts = renderProducts;
+renderProducts = function(products) {
+    const productsContainer = document.querySelector('.products');
+    productsContainer.innerHTML = '';
+    products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.title}">
+            <h3>${product.title}</h3>
+            <p class="price">$${product.price}</p>
+            <p>${product.category}</p>
+            <button onclick="addToCart(${product.id})">Agregar al carrito</button>
+            <button onclick=·
+            <button onclick="favoriteProduct(${product.id})" class="favorite-btn" data-product-id="${product.id}">
+        `;
+        productsContainer.appendChild(productCard);
+    });
+
+    // Asigna eventos a los botones de favorito
+    productsContainer.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = parseInt(this.dataset.productId, 10);
+            toggleFavorite(productId);
+        });
+    });
+    updateFavoriteButtons();
+};
+
+
 
 // ========== CARRUSEL ==========
 const carousel = document.getElementById('carousel');
@@ -471,6 +663,8 @@ function mostrarProductosCarrusel(contenedorId) {
             <h4>${product.title}</h4>
             <p class="price">$${product.price}</p>
             <button onclick="addToCart(${product.id})">Agregar al carrito</button>
+        <button onclick="toggleFavorite(${product.id})" class="favorite-btn" data-product-id="${product.id}">
+        Agregar a favoritos</button>
         `;
         wrapper.appendChild(div);
     });
@@ -480,6 +674,7 @@ function mostrarProductosCarrusel(contenedorId) {
     btnIzq.disabled = start === 0;
     btnDer.disabled = end >= productos.length;
 }
+
 
 const carruselIndices = {
     "categoria-electronics": 0,
